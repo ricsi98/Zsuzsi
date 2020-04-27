@@ -27,4 +27,14 @@ public class vec2 {
     public static double cross(vec2 a, vec2 b) { return a.getX() * b.getY() - a.getY() * b.getX(); }
 
     public static final vec2 ZERO = new vec2(0,0);
+    public static final vec2 EAST = new vec2(1,0);
+    public static final vec2 WEST = new vec2(-1, 0);
+    public static final vec2 NORTH = new vec2(0,1);
+    public static final vec2 SOUTH = new vec2(0,-1);
+
+    @Override
+    public String toString() {
+        return x + " " + y;
+    }
+
 }

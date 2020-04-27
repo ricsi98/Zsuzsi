@@ -2,6 +2,7 @@ package env;
 
 import agent.Agent;
 import agent.controllers.ExplorerController;
+import agent.controllers.GridWalker;
 import agent.controllers.RightTurner;
 import graphics.IDrawable;
 import math.Line;
@@ -24,7 +25,13 @@ public class Environment implements IDrawable {
         walls.add(new Line(new vec2(-SIZE, SIZE), new vec2(SIZE, SIZE)));
         walls.add(new Line(new vec2(SIZE, SIZE), new vec2(SIZE, -SIZE)));
         walls.add(new Line(new vec2(SIZE, -SIZE), new vec2(-SIZE, -SIZE)));
-        this.zsuzsi = new Agent(vec2.ZERO, 50, 5, Math.PI/2, this, new ExplorerController(50*15));
+        GridWalker controller = new GridWalker();
+        List<GridWalker.State> lst = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            lst.add(GridWalker.State.FORWARD);
+        }
+        controller.addTrajectory(lst);
+        this.zsuzsi = new Agent(vec2.ZERO, 50, 5, Math.PI/2, this, controller); //new ExplorerController(50*15, Math.PI/2)
     }
 
     public void addWall(Line line) { this.walls.add(line); }

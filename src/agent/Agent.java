@@ -107,6 +107,6 @@ public class Agent implements IDrawable {
     }
 
     public void control() {
-        actionState = controller.getNextState(actionState, getSensorDistances(), pos, dir, sensorSpread);
+        actionState = controller.getNextState(actionState, getSensorDistances(), pos, dir);
     }
 }

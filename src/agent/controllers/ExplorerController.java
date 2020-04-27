@@ -17,6 +17,7 @@ public class ExplorerController implements IController {
     private BufferedImage canvas;
     private double sensorDist;
     private static final double TRESHOLD = 150;
+    private double sensorSpread;
 
     private vec2 toCanvasSpace(vec2 v) {
         return v;
@@ -41,8 +42,9 @@ public class ExplorerController implements IController {
         g.fillRect(0,0,600,600);
     }
 
-    public ExplorerController(double sensorDist) {
+    public ExplorerController(double sensorDist, double sensorSpread) {
         this.sensorDist = sensorDist;
+        this.sensorSpread = sensorSpread;
         frame = new JFrame("PointCloud");
         frame.setLocation(800,200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +62,7 @@ public class ExplorerController implements IController {
     }
 
     @Override
-    public Agent.ZsuzsiActionState getNextState(Agent.ZsuzsiActionState currentState, List<Double> distances, vec2 position, vec2 dir, double sensorSpread) {
+    public Agent.ZsuzsiActionState getNextState(Agent.ZsuzsiActionState currentState, List<Double> distances, vec2 position, vec2 dir) {
         List<vec2> sensorDirs = getSensorDirs(position, dir, sensorSpread, distances.size());
         for (int i = 0; i < distances.size(); i++) {
             vec2 sensorDir = sensorDirs.get(i);
@@ -71,12 +73,12 @@ public class ExplorerController implements IController {
         }
         panel.repaint();
 
-
         if (distances.get(2) < TRESHOLD ||distances.get(4) < TRESHOLD || distances.get(3) < TRESHOLD) {
             return Agent.ZsuzsiActionState.ROTATE_RIGHT;
         }
         return Agent.ZsuzsiActionState.GO_FORWARD;
     }
+
 
     private List<vec2> getSensorDirs(vec2 pos, vec2 dir, double sensorSpread, int sensorCnt) {
         List<vec2> lst = new ArrayList<>();
